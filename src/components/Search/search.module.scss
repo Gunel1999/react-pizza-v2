@@ -1,0 +1,31 @@
+.root {
+  position: relative;
+  width: 35%;
+  margin: 0 20px;
+  .search {
+    border: 1px solid #f3f3f3;
+    border-radius: 30px;
+    padding: 12px 20px;
+    width: 100%;
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+
+    &:focus {
+      border: 1px solid #fe5d1e80;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    right: 15px;
+    top: 8px;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 650px) {
+    margin-top: 30px;
+    width: 70%;
+    margin-inline: 0;
+  }
+}

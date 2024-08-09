@@ -5,12 +5,16 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../pagination';
 import { SearchContext } from '../App';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Home = () => {
+  const categoryId = useSelector(state => state.filterReducer.categoryId);
+  const dispatch = useDispatch();
+
   const { searchValue } = React.useContext(SearchContext);
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
+  // const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({
     name: 'популярности',
     sort: 'rating',

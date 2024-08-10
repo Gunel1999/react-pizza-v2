@@ -1,12 +1,21 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSortType } from '../redux/slices/filterSlice';
 
-const Sort = ({ value, onChangeSort, asc, onChangeAsc }) => {
+const Sort = ({ asc, onChangeAsc }) => {
+  const dispatch = useDispatch();
+  const sort = useSelector(state => state.filterReducer.sortType);
   const [open, setOpen] = React.useState(false);
   const list = [
     { name: 'популярности', sort: 'rating' },
     { name: 'цене', sort: 'price' },
     { name: 'алфавиту', sort: 'title' },
   ];
+
+  const onClickListItem = obj => {
+    dispatch(setSortType(obj));
+    setOpen(false);
+  };
 
   return (
     <div className="sort">
@@ -45,7 +54,7 @@ const Sort = ({ value, onChangeSort, asc, onChangeAsc }) => {
           )}
           <b>Сортировка по:</b>
         </div>
-        <span onClick={() => setOpen(!open)}>{value.name}</span>
+        <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -53,11 +62,8 @@ const Sort = ({ value, onChangeSort, asc, onChangeAsc }) => {
             {list.map((obj, index) => (
               <li
                 key={index}
-                onClick={() => {
-                  onChangeSort(obj);
-                  setOpen(false);
-                }}
-                className={value.sort === obj.sort ? 'active' : ''}
+                onClick={() => onClickListItem(obj)}
+                className={sort.sort === obj.sort ? 'active' : ''}
               >
                 {obj.name}
               </li>

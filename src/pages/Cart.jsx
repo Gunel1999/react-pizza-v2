@@ -16,6 +16,10 @@ const Cart = () => {
     }
   };
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [totalCount]);
+
   if (totalPrice) {
     return (
       <div className="container container--cart">

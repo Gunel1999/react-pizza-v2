@@ -29,7 +29,6 @@ const Home = () => {
   const { items, status } = useSelector(state => state.pizzasReducer);
   const sort = sortType.sort;
   const dispatch = useDispatch();
-  const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
   const onChangeCategory = id => {
@@ -70,17 +69,12 @@ const Home = () => {
           sort: sort || list[0],
         })
       );
-      isSearch.current = true;
     }
   }, []);
 
   // если был первый рендер то запрашиваем пиццы
   React.useEffect(() => {
-    if (!isSearch.current) {
-      getPizzas();
-    }
-
-    isSearch.current = false;
+    getPizzas();
   }, [categoryId, sort, sortAsc, searchValue, currentPage]);
 
   // Если изменили параметры и был рендер то вшиваем URL-параметры

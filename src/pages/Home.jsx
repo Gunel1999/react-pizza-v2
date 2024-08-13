@@ -13,8 +13,9 @@ import {
   setSortAsc,
   setCurrentPage,
   setFilters,
+  selectFilter,
 } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { fetchPizzas, selecPizzas } from '../redux/slices/pizzasSlice';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,8 +26,8 @@ const Home = () => {
     currentPage,
     searchValue,
     inputSearch,
-  } = useSelector(state => state.filterReducer);
-  const { items, status } = useSelector(state => state.pizzasReducer);
+  } = useSelector(selectFilter);
+  const { items, status } = useSelector(selecPizzas);
   const sort = sortType.sort;
   const dispatch = useDispatch();
   const isMounted = React.useRef(false);
@@ -112,13 +113,17 @@ const Home = () => {
         <Sort asc={sortAsc} onChangeAsc={i => onChangeAsc(i)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {status === 'loading'
-          ? skeletons
-          : status === 'error'
-          ? 'Произошла ошибка'
-          : pizzaItems}
-      </div>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>Произошла ошибка 😕</h2>
+          <p>Попробуйте перезагрузить страницу</p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading' ? skeletons : pizzaItems}
+        </div>
+      )}
+
       <Pagination
         currentPage={currentPage}
         onChangePage={number => onChangePage(number)}

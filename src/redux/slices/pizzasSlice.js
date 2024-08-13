@@ -33,19 +33,21 @@ export const pizzasSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchPizzas.pending, state => {
-        state.items = [];
         state.status = 'loading';
+        state.items = [];
       })
       .addCase(fetchPizzas.fulfilled, (state, action) => {
         state.items = action.payload;
         state.status = 'success';
       })
       .addCase(fetchPizzas.rejected, state => {
-        state.items = [];
         state.status = 'error';
+        state.items = [];
       });
   },
 });
+
+export const selecPizzas = state => state.pizzasReducer;
 
 export const { setItems } = pizzasSlice.actions;
 

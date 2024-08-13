@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import CartItem from '../components/CartItem';
-import { clearProducts } from '../redux/slices/cartSlice';
+import { clearProducts, selectCart } from '../redux/slices/cartSlice';
 import EmptyCart from '../components/EmptyCart';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { totalPrice, products } = useSelector(state => state.cartReducer);
+  const { totalPrice, products } = useSelector(selectCart);
   const totalCount = products.reduce((sum, item) => sum + item.count, 0);
 
   const clearCart = () => {
@@ -15,10 +15,6 @@ const Cart = () => {
       dispatch(clearProducts());
     }
   };
-
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [totalCount]);
 
   if (totalPrice) {
     return (

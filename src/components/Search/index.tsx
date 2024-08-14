@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-ignore
 import debounce from 'lodash.debounce';
 import styles from './search.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,26 +13,26 @@ const Search = () => {
   const { inputSearch } = useSelector(selectFilter);
 
   const dispatch = useDispatch();
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const onSearch = value => {
+  const onSearch = (value: string) => {
     dispatch(setSearchValue(value));
   };
 
   const onClear = () => {
     onSearch('');
     dispatch(setInputSearch(''));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const updateSearchValue = React.useCallback(
-    debounce(str => {
+    debounce((str: string) => {
       onSearch(str);
     }, 500),
     []
   );
 
-  const onChangeInput = e => {
+  const onChangeInput = (e: any) => {
     dispatch(setInputSearch(e.target.value));
     updateSearchValue(e.target.value);
   };

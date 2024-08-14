@@ -5,11 +5,14 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 
-const Header = () => {
+const Header: React.FC = () => {
   const { totalPrice, products } = useSelector(selectCart);
   const location = useLocation();
 
-  const totalCount = products.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = products.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
   return (
     <div className="header">
       <div className="container">

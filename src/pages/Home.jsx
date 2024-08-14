@@ -1,7 +1,7 @@
 import React from 'react';
 import qs from 'qs';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories';
 import Sort, { list } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
@@ -96,7 +96,9 @@ const Home = () => {
   }, [categoryId, sort, sortAsc, searchValue, currentPage]);
 
   const pizzaItems = items.map(pizza => (
-    <PizzaBlock key={pizza.id} {...pizza} />
+    <Link key={pizza.id} to={`/pizza/${pizza.id}`}>
+      <PizzaBlock {...pizza} />
+    </Link>
   ));
 
   const skeletons = [...new Array(4)].map((_, index) => (

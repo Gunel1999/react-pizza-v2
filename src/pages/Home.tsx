@@ -7,19 +7,17 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../pagination';
 import { useSelector } from 'react-redux';
-import filterSlice, {
+import { useAppDispatch } from '../redux/store';
+import { selectFilter } from '../redux/filter/selectors';
+import {
   setCategoryId,
-  setSortAsc,
   setCurrentPage,
   setFilters,
-  selectFilter,
-} from '../redux/slices/filterSlice';
-import {
-  fetchPizzas,
-  SearchPizzaParams,
-  selecPizzas,
-} from '../redux/slices/pizzasSlice';
-import { useAppDispatch } from '../redux/store';
+  setSortAsc,
+} from '../redux/filter/slice';
+import { selecPizzas } from '../redux/pizza/selectors';
+import { SearchPizzaParams } from '../redux/pizza/types';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();

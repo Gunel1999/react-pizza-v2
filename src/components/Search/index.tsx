@@ -3,11 +3,8 @@ import React, { ChangeEventHandler } from 'react';
 import debounce from 'lodash.debounce';
 import styles from './search.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setSearchValue,
-  setInputSearch,
-  selectFilter,
-} from '../../redux/slices/filterSlice';
+import { selectFilter } from '../../redux/filter/selectors';
+import { setInputSearch, setSearchValue } from '../../redux/filter/slice';
 
 const Search = () => {
   const { inputSearch } = useSelector(selectFilter);

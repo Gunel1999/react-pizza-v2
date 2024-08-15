@@ -1,11 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectSortType,
-  setSortType,
-  SortPropertyEnum,
-} from '../redux/slices/filterSlice';
-import { useWhyDidYouUpdate } from 'ahooks';
+import { SortPropertyEnum } from '../redux/filter/types';
+import { selectSortType } from '../redux/filter/selectors';
+import { setSortType } from '../redux/filter/slice';
 
 type SortProps = {
   asc: string;
@@ -28,7 +25,6 @@ const Sort: React.FC<SortProps> = React.memo(({ asc, onChangeAsc }) => {
   const sort = useSelector(selectSortType);
   const [open, setOpen] = React.useState(false);
   const sortRef = React.useRef<HTMLDivElement>(null);
-  useWhyDidYouUpdate('Sort', { sort, asc, open });
 
   const onClickListItem = (obj: SortItem) => {
     dispatch(setSortType(obj));

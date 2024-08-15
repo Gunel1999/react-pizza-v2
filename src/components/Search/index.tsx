@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 // @ts-ignore
 import debounce from 'lodash.debounce';
 import styles from './search.module.scss';
@@ -32,7 +32,7 @@ const Search = () => {
     []
   );
 
-  const onChangeInput = (e: any) => {
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setInputSearch(e.target.value));
     updateSearchValue(e.target.value);
   };

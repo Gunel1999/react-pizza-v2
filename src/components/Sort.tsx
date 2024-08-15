@@ -30,8 +30,9 @@ const Sort: React.FC<SortProps> = ({ asc, onChangeAsc }) => {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      const _e = e as MouseEvent & { path: Node[] };
+      if (sortRef.current && !_e.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };

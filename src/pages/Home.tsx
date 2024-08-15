@@ -13,7 +13,6 @@ import filterSlice, {
   setCurrentPage,
   setFilters,
   selectFilter,
-  FilterSliceState,
 } from '../redux/slices/filterSlice';
 import {
   fetchPizzas,
@@ -37,13 +36,13 @@ const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const isMounted = React.useRef(false);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
 
-  const onChangeAsc = (i: 'asc' | 'desc') => {
+  const onChangeAsc = React.useCallback((i: 'asc' | 'desc') => {
     dispatch(setSortAsc(i));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -106,7 +105,9 @@ const Home: React.FC = () => {
     isMounted.current = true;
   }, [categoryId, sort, sortAsc, searchValue, currentPage]);
 
-  const pizzaItems = items.map((pizza: any) => <PizzaBlock {...pizza} />);
+  const pizzaItems = items.map((pizza: any) => (
+    <PizzaBlock key={pizza.id} {...pizza} />
+  ));
 
   const skeletons = [...new Array(4)].map((_, index) => (
     <Skeleton key={index} />
@@ -115,14 +116,8 @@ const Home: React.FC = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          value={categoryId}
-          onClickCategory={i => onChangeCategory(i)}
-        />
-        <Sort
-          asc={sortAsc}
-          onChangeAsc={(i: 'asc' | 'desc') => onChangeAsc(i)}
-        />
+        <Categories value={categoryId} onClickCategory={onChangeCategory} />
+        <Sort asc={sortAsc} onChangeAsc={onChangeAsc} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (

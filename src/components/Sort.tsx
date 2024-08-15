@@ -4,8 +4,8 @@ import {
   selectSortType,
   setSortType,
   SortPropertyEnum,
-  SortTypeType,
 } from '../redux/slices/filterSlice';
+import { useWhyDidYouUpdate } from 'ahooks';
 
 type SortProps = {
   asc: string;
@@ -23,11 +23,12 @@ export const list = [
   { name: 'алфавиту', sort: SortPropertyEnum.TITLE },
 ];
 
-const Sort: React.FC<SortProps> = ({ asc, onChangeAsc }) => {
+const Sort: React.FC<SortProps> = React.memo(({ asc, onChangeAsc }) => {
   const dispatch = useDispatch();
   const sort = useSelector(selectSortType);
   const [open, setOpen] = React.useState(false);
   const sortRef = React.useRef<HTMLDivElement>(null);
+  useWhyDidYouUpdate('Sort', { sort, asc, open });
 
   const onClickListItem = (obj: SortItem) => {
     dispatch(setSortType(obj));
@@ -105,6 +106,6 @@ const Sort: React.FC<SortProps> = ({ asc, onChangeAsc }) => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

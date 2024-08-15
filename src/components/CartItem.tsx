@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  addProduct,
   minusProduct,
+  plusProduct,
   removeProduct,
 } from '../redux/slices/cartSlice';
 
@@ -27,20 +27,20 @@ const CartItem: React.FC<CartItemProps> = ({
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
-    dispatch(addProduct({ id }));
+    dispatch(plusProduct(id));
   };
 
   const onClickMinus = () => {
     if (count > 1) {
-      dispatch(minusProduct({ id }));
+      dispatch(minusProduct(id));
     } else {
-      dispatch(removeProduct({ id }));
+      dispatch(removeProduct(id));
     }
   };
 
   const onClickRemove = () => {
     if (window.confirm('Вы действительно хотите удалить пиццу?')) {
-      dispatch(removeProduct({ id }));
+      dispatch(removeProduct(id));
     }
   };
   return (
